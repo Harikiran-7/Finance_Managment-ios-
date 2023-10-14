@@ -119,7 +119,6 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         var val = Float(Float(exp_value)/Float(inc_value))
         progressbar.progress = val
-        
     }
     
     @IBAction func logout(_ sender: Any) {
