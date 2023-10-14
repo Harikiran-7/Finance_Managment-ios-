@@ -39,8 +39,15 @@ class ViewController: UIViewController{
     
     @IBAction func signin(_ sender: Any) {
         var count=0
+        var signin = false
+        var user = false
         for name in UserManager.shared.users {
+            if name.username==username.text {
+                user=true
+            }
             if(name.username==username.text && name.password==pass.text){
+                signin=true
+                user=true
                 test.text="Sign In"
                 ind=count
                 performSegue(withIdentifier: "login", sender: nil)
@@ -48,6 +55,24 @@ class ViewController: UIViewController{
                 pass.text=""
             }
             count = count+1
+        }
+        if signin == false && user==false{
+            let okhandler = {
+                (action: UIAlertAction)->Void in
+            }
+            let alert = UIAlertController(title: "Warning!", message: "No Users Found", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
+            self.present(alert, animated: true, completion: nil)
+            username.text=""
+            pass.text=""
+        }else if signin==false && user==true{
+            let okhandler = {
+                (action: UIAlertAction)->Void in
+            }
+            let alert = UIAlertController(title: "Warning!", message: "Please Check your Password", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
+            self.present(alert, animated: true, completion: nil)
+            pass.text=""
         }
                
     }

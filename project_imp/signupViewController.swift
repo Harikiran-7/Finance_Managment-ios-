@@ -23,17 +23,52 @@ class signupViewController: UIViewController {
         signup.layer.cornerRadius=22
         rpass.layer.cornerRadius=22
     }
-    
+  
     var new_user:User?
     @IBAction func signup(_ sender: Any) {
+        var user_found=false
+        var length=false
         if username.text != "" && pass.text != " " && pass.text == rpass.text{
-            new_user = User(username:"\(username.text!)", password: "\(pass.text!)", transactions: [])
-            UserManager.shared.addUser(new_user!)
-            username.text=""
-            pass.text=""
-            rpass.text=""
-            print("Signup successful for user: \(new_user)")
-           dismiss(animated: true, completion: nil)
+            
+            for value in UserManager.shared.users {
+                if username.text==value.username{
+                    user_found=true
+                }
+            }
+            if username.text!.count < 8 || pass.text!.count < 8 {
+                length=true
+            }
+            
+            if user_found == false && length == false{
+                new_user = User(username:"\(username.text!)", password: "\(pass.text!)", transactions: [])
+                UserManager.shared.addUser(new_user!)
+                username.text=""
+                pass.text=""
+                rpass.text=""
+                dismiss(animated: true, completion: nil)
+            }
+            
+            if user_found == true {
+                let okhandler = {
+                    (action: UIAlertAction)->Void in
+                }
+                let alert = UIAlertController(title: "Warning!", message: "User Already Exists", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
+                self.present(alert, animated: true, completion: nil)
+                username.text=""
+                pass.text=""
+                rpass.text=""
+            }else {
+                let okhandler = {
+                    (action: UIAlertAction)->Void in
+                }
+                let alert = UIAlertController(title: "Warning!", message: "Lenght of password is too short", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
+                self.present(alert, animated: true, completion: nil)
+                pass.text=""
+                rpass.text=""
+            }
+            
         }
     }
 }

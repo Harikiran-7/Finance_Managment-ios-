@@ -48,39 +48,74 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     @IBAction func new_trans(_ sender: Any) {
+        var ramount = amount.text!
         if !edit.isOn{
-            var am = Int(amount.text!)
-            new_t.amount=am!
-            new_t.description=des.text!
-            amount.text=""
-            des.text=""
-            total_value = total_value + am!
-            if am! > 0{
-                inc_value = inc_value + am!
+            if var am = Int(ramount){
+                new_t.amount=am
+                new_t.description=des.text!
+                amount.text=""
+                des.text=""
+                if new_t.description == ""{
+                    new_t.description="description not given"
+                }
+                
+                var ctotal = total_value
+                
+                if (ctotal + am) < 0 {
+                    let okhandler = {
+                        (action: UIAlertAction)->Void in
+                    }
+                    let alert = UIAlertController(title: "Warning!", message: "OOOps you dont have that much amount", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
+                    self.present(alert, animated: true, completion: nil)
+                    amount.text=""
+                }else{
+                    total_value = total_value + am
+                    if am > 0{
+                        inc_value = inc_value + am
+                    }else{
+                        exp_value = exp_value + (am * -1)
+                    }
+                    inc.text="₹ \(inc_value)"
+                    exp.text="₹ \(exp_value)"
+                    total.text="₹ \(total_value)"
+                    UserManager.shared.users[ind].transactions.append(new_t)
+                    tableview.reloadData()
+                }
             }else{
-                exp_value = exp_value + (am! * -1)
+                let okhandler = {
+                    (action: UIAlertAction)->Void in
+                }
+                let alert = UIAlertController(title: "Warning!", message: "Please Enter a valid amount", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
+                self.present(alert, animated: true, completion: nil)
+                amount.text=""
             }
-            inc.text="₹ \(inc_value)"
-            exp.text="₹ \(exp_value)"
-            total.text="₹ \(total_value)"
-            UserManager.shared.users[ind].transactions.append(new_t)
-            tableview.reloadData()
         }else{
-            var am = Int(amount.text!)
-            total_value = total_value + am!
-            if am! > 0{
-                inc_value = inc_value + am!
+            if var am = Int(ramount){
+                total_value = total_value + am
+                if am > 0{
+                    inc_value = inc_value + am
+                }else{
+                    exp_value = exp_value + (am * -1)
+                }
+                inc.text="₹ \(inc_value)"
+                exp.text="₹ \(exp_value)"
+                total.text="₹ \(total_value)"
+                UserManager.shared.users[ind].transactions[edit_ind].amount = am
+                UserManager.shared.users[ind].transactions[edit_ind].description=des.text!
+                amount.text=""
+                des.text=""
+                tableview.reloadData()
             }else{
-                exp_value = exp_value + (am! * -1)
+                let okhandler = {
+                    (action: UIAlertAction)->Void in
+                }
+                let alert = UIAlertController(title: "Warning!", message: "Please Enter a valid amount", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
+                self.present(alert, animated: true, completion: nil)
+                amount.text=""
             }
-            inc.text="₹ \(inc_value)"
-            exp.text="₹ \(exp_value)"
-            total.text="₹ \(total_value)"
-            UserManager.shared.users[ind].transactions[edit_ind].amount = am!
-            UserManager.shared.users[ind].transactions[edit_ind].description=des.text!
-            amount.text=""
-            des.text=""
-            tableview.reloadData()
         }
         var val = Float(Float(exp_value)/Float(inc_value))
         progressbar.progress = val
