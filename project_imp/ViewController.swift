@@ -49,11 +49,18 @@ class ViewController: UIViewController{
             }
             count = count+1
         }
-        for user in UserManager.shared.users{
-            print("\(user.username)")
-        }
                
     }
+    
+    
+    @IBAction func author(_ sender: Any) {
+        
+        performSegue(withIdentifier: "author", sender: nil)
+        
+    }
+    
+    
+    
     
     @IBAction func signup(_ sender: Any) {
         performSegue(withIdentifier: "signup", sender: nil)
