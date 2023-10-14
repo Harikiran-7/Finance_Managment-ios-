@@ -22,8 +22,7 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var des: UITextField!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var edit: UISwitch!
-    
-    
+    @IBOutlet weak var progressbar: UIProgressView!
     
     var new_t:Transaction = Transaction(amount: 0, description: "NA")
     var images = [UIImage(named:"grupee"),UIImage(named: "rrupee")]
@@ -44,7 +43,8 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         inc.text="₹ \(inc_value)"
         exp.text="₹ \(exp_value)"
         total.text="₹ \(total_value)"
-        
+        var val = Float(Float(exp_value)/Float(inc_value))
+        progressbar.progress = val
     }
     
     @IBAction func new_trans(_ sender: Any) {
@@ -82,10 +82,10 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             des.text=""
             tableview.reloadData()
         }
+        var val = Float(Float(exp_value)/Float(inc_value))
+        progressbar.progress = val
         
     }
-    
-    
     
     @IBAction func logout(_ sender: Any) {
         dismiss(animated: true, completion: nil)
