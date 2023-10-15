@@ -15,7 +15,6 @@ class ViewController: UIViewController{
     @IBOutlet weak var pass: UITextField!
     
     var ind=0
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view
@@ -36,7 +35,6 @@ class ViewController: UIViewController{
         pass.placeholder = "Enter your password"
         signin.setTitleColor(UIColor.white, for: .normal)
     }
-    
     @IBAction func signin(_ sender: Any) {
         var count=0
         var signin = false
@@ -48,7 +46,7 @@ class ViewController: UIViewController{
             if(name.username==username.text && name.password==pass.text){
                 signin=true
                 user=true
-                test.text="Sign In"
+                //test.text="Sign In"
                 ind=count
                 performSegue(withIdentifier: "login", sender: nil)
                 username.text=""

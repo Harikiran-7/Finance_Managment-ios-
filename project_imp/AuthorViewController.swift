@@ -26,7 +26,7 @@ class AuthorViewController: UIViewController {
     
     @IBAction func submit(_ sender: Any) {
         if Int(rating.value) == 1{
-            review.text="Sorry for what went wrong we will improve it"
+            review.text=" 😭😭 Sorry for what went wrong we will improve it"
         }else if Int(rating.value) == 2{
             review.text="we are improving"
         }else if Int(rating.value) == 3{
@@ -34,7 +34,7 @@ class AuthorViewController: UIViewController {
         }else if Int(rating.value) == 4{
             review.text="Thanks"
         }else{
-            review.text="Thank you so much"
+            review.text=" 😃 Thank you so much"
         }
     }
     

@@ -24,11 +24,11 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var edit: UISwitch!
     @IBOutlet weak var progressbar: UIProgressView!
     
+    
     var new_t:Transaction = Transaction(amount: 0, description: "NA")
     var images = [UIImage(named:"grupee"),UIImage(named: "rrupee")]
     override func viewDidLoad() {
         super.viewDidLoad()
-
 //         Do any additional setup after loading the view.
         for value in UserManager.shared.users[ind].transactions {
             if value.amount>0{
@@ -93,20 +93,34 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         }else{
             if var am = Int(ramount){
+                var tot = total_value
+                print("\(total_value) in editing")
                 total_value = total_value + am
-                if am > 0{
-                    inc_value = inc_value + am
+                print("\(total_value) in editing")
+                if total_value < 0 {
+                    total_value = tot
+                    let okhandler = {
+                        (action: UIAlertAction)->Void in
+                    }
+                    let alert = UIAlertController(title: "Warning!", message: "Please check the amount you Entered", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
+                    self.present(alert, animated: true, completion: nil)
+                    amount.text=""
                 }else{
-                    exp_value = exp_value + (am * -1)
+                    if am > 0{
+                        inc_value = inc_value + am
+                    }else{
+                        exp_value = exp_value + (am * -1)
+                    }
+                    inc.text="₹ \(inc_value)"
+                    exp.text="₹ \(exp_value)"
+                    total.text="₹ \(total_value)"
+                    UserManager.shared.users[ind].transactions[edit_ind].amount = am
+                    UserManager.shared.users[ind].transactions[edit_ind].description=des.text!
+                    amount.text=""
+                    des.text=""
+                    tableview.reloadData()
                 }
-                inc.text="₹ \(inc_value)"
-                exp.text="₹ \(exp_value)"
-                total.text="₹ \(total_value)"
-                UserManager.shared.users[ind].transactions[edit_ind].amount = am
-                UserManager.shared.users[ind].transactions[edit_ind].description=des.text!
-                amount.text=""
-                des.text=""
-                tableview.reloadData()
             }else{
                 let okhandler = {
                     (action: UIAlertAction)->Void in
@@ -159,26 +173,32 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }else{
                 exp_value = exp_value + prevam
             }
-            
+            tableView.deselectRow(at: indexPath, animated: true)
+            let selectedCell = tableView.cellForRow(at: indexPath)
+            selectedCell?.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+            UIView.animate(withDuration: 0.3) {
+                selectedCell?.transform = .identity
+            }
+            print("\(total_value) in selcted")
             edit_ind=ind_table
-            //total_value = total_value + UserManager.shared.users[ind].transactions[ind_table].amount
-            
-//            if UserManager.shared.users[ind].transactions[ind_table].amount > 0{
-//                inc_value = inc_value + UserManager.shared.users[ind].transactions[ind_table].amount
-//            }else{
-//                exp_value = exp_value + (UserManager.shared.users[ind].transactions[ind_table].amount * -1)
-//            }
-            
-            
-            
         }else{
+            tableView.deselectRow(at: indexPath, animated: true)
+            let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, -500, 0, 0)
+            let selectedCell = tableView.cellForRow(at: indexPath)
+            selectedCell?.layer.transform = rotationTransform
+                       UIView.animate(withDuration: 0.1) {
+                           selectedCell?.layer.transform = CATransform3DIdentity
+                       }
             performSegue(withIdentifier: "more", sender: nil)
         }
+       
+       
     }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         var obj = segue.destination as! moredataViewController
+        obj.am_value = UserManager.shared.users[ind].transactions[ind_table].amount
         obj.am = "₹ \(UserManager.shared.users[ind].transactions[ind_table].amount)"
         obj.des = "\(UserManager.shared.users[ind].transactions[ind_table].description)"
     }
