@@ -171,12 +171,12 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             print(newTotalIncome)
             if newTotalIncome >= 0 {
                 // Allow deletion and update values
-                inc_value = newTotalIncome
+                //inc_value = newTotalIncome
                 total_value -= deletedAmount
                 UserManager.shared.users[ind].transactions.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
-                
-                
+                print("deleting amount \(deletedAmount)")
+                print("newtotalincome \(newTotalIncome)")
                 total_value = newTotalIncome
                 if deletedAmount < 0{
                     exp_value = exp_value + deletedAmount
