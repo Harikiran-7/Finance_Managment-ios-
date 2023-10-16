@@ -30,6 +30,7 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
 //         Do any additional setup after loading the view.
+        //tableView.isEditing = true
         for value in UserManager.shared.users[ind].transactions {
             if value.amount>0{
                 inc_value = inc_value+value.amount
@@ -159,6 +160,45 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         return cellobj
         
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Calculate the new total income after deletion
+            let deletedAmount = UserManager.shared.users[ind].transactions[indexPath.row].amount
+            let newTotalIncome = total_value - deletedAmount
+
+            // Check if new total income is non-negative
+            print(newTotalIncome)
+            if newTotalIncome >= 0 {
+                // Allow deletion and update values
+                inc_value = newTotalIncome
+                total_value -= deletedAmount
+                UserManager.shared.users[ind].transactions.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                
+                
+                total_value = newTotalIncome
+                if deletedAmount < 0{
+                    exp_value = exp_value + deletedAmount
+                }else{
+                    inc_value = inc_value - deletedAmount
+                }
+                inc.text="₹ \(inc_value)"
+                exp.text="₹ \(exp_value)"
+                total.text="₹ \(total_value)"
+                var val = Float(Float(exp_value)/Float(inc_value))
+                progressbar.progress = val
+            } else {
+                // Prevent deletion and show an alert
+                let alert = UIAlertController(title: "Warning!", message: "Deleting this transaction cannot be done!!", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        
+
+    }
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         ind_table = indexPath.row
