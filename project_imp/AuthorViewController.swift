@@ -15,11 +15,9 @@ class AuthorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // Do any additional setup after loading the v
         img.image = UIImage(named: "Author")
     }
-    
-    
     @IBAction func rate(_ sender: Any) {
         rate_value.text="\(Int(rating.value))"
     }

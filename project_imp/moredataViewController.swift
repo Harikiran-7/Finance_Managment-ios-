@@ -22,8 +22,7 @@ class moredataViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        
+        // Do any additional setup after loading th
         image.image = UIImage(named: "f1")
         image.animationImages = imgs
         image.animationDuration = 25

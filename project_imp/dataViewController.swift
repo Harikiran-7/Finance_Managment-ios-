@@ -59,7 +59,6 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 if new_t.description == ""{
                     new_t.description="description not given"
                 }
-                
                 var ctotal = total_value
                 
                 if (ctotal + am) < 0 {
@@ -243,6 +242,4 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         obj.des = "\(UserManager.shared.users[ind].transactions[ind_table].description)"
         obj.modalPresentationStyle = .fullScreen
     }
-    
-
 }
