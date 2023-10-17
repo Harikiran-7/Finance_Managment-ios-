@@ -241,6 +241,7 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         obj.am_value = UserManager.shared.users[ind].transactions[ind_table].amount
         obj.am = "₹ \(UserManager.shared.users[ind].transactions[ind_table].amount)"
         obj.des = "\(UserManager.shared.users[ind].transactions[ind_table].description)"
+        obj.modalPresentationStyle = .fullScreen
     }
     
 

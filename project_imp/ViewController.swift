@@ -92,6 +92,13 @@ class ViewController: UIViewController{
         if segue.identifier == "login" {
             let obj = segue.destination as! dataViewController
             obj.ind = ind
+            obj.modalPresentationStyle = .fullScreen
+        }else if segue.identifier == "author"{
+                let obj = segue.destination as! AuthorViewController
+            obj.modalPresentationStyle = .fullScreen
+        }else{
+            let obj = segue.destination  as! signupViewController
+            obj.modalPresentationStyle = .fullScreen
         }
     }
 }
