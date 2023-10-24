@@ -119,6 +119,7 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     UserManager.shared.users[ind].transactions[edit_ind].description=des.text!
                     amount.text=""
                     des.text=""
+                    edit.setOn(false, animated: false)
                     tableview.reloadData()
                 }
             }else{

@@ -24,6 +24,13 @@ class signupViewController: UIViewController {
         rpass.layer.cornerRadius=22
     }
   
+    
+    @IBAction func back(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
     var new_user:User?
     @IBAction func signup(_ sender: Any) {
         var user_found=false
@@ -35,7 +42,7 @@ class signupViewController: UIViewController {
                     user_found=true
                 }
             }
-            if username.text!.count < 8 || pass.text!.count < 8 {
+            if username.text!.count < 1 || pass.text!.count < 1 {
                 length=true
             }
             
@@ -69,6 +76,13 @@ class signupViewController: UIViewController {
                 rpass.text=""
             }
             
+        }else{
+            let okhandler = {
+                (action: UIAlertAction)->Void in
+            }
+            let alert = UIAlertController(title: "Warning!", message: "Check if username is not empty and password is same in both fields", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }
