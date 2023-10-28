@@ -42,7 +42,7 @@ class signupViewController: UIViewController {
                     user_found=true
                 }
             }
-            if username.text!.count < 1 || pass.text!.count < 1 {
+            if username.text!.count < 3 || pass.text!.count < 3 {
                 length=true
             }
             

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVKit
 
 class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var ind:Int=0
@@ -243,4 +244,27 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         obj.des = "\(UserManager.shared.users[ind].transactions[ind_table].description)"
         obj.modalPresentationStyle = .fullScreen
     }
+    
+    var path:String!
+    var urlpath:URL!
+    var audioplayer:AVPlayer!
+    var playercontroller = AVPlayerViewController()
+    
+
+    @IBAction func video(_ sender: Any) {
+        path = Bundle.main.path(forResource: "video", ofType: "mov")
+        urlpath = URL(fileURLWithPath: path)
+        
+        audioplayer = AVPlayer(url: urlpath)
+        playercontroller.player=audioplayer
+        
+        present(playercontroller, animated: true, completion: nil)
+        playercontroller.player?.play()
+        
+    }
+    
+    
+    
+    
+    
 }
