@@ -9,6 +9,10 @@ import UIKit
 import AVKit
 
 class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     var ind:Int=0
     var ind_table=0
     var inc_value=0
@@ -24,12 +28,15 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var edit: UISwitch!
     @IBOutlet weak var progressbar: UIProgressView!
+    @IBOutlet weak var track: UILabel!
+    
     
     
     var new_t:Transaction = Transaction(amount: 0, description: "NA")
     var images = [UIImage(named:"grupee"),UIImage(named: "rrupee")]
     override func viewDidLoad() {
         super.viewDidLoad()
+        track.layer.cornerRadius = 22
 //         Do any additional setup after loading the view.
         //tableView.isEditing = true
         for value in UserManager.shared.users[ind].transactions {
@@ -62,27 +69,27 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }
                 var ctotal = total_value
                 
-                if (ctotal + am) < 0 {
-                    let okhandler = {
-                        (action: UIAlertAction)->Void in
-                    }
-                    let alert = UIAlertController(title: "Warning!", message: "OOOps you dont have that much amount", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
-                    self.present(alert, animated: true, completion: nil)
-                    amount.text=""
-                }else{
+//                if (ctotal + am) < 0 {
+//                    let okhandler = {
+//                        (action: UIAlertAction)->Void in
+//                    }
+//                    let alert = UIAlertController(title: "Warning!", message: "OOOps you dont have that much amount", preferredStyle: .alert)
+//                    alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
+//                    self.present(alert, animated: true, completion: nil)
+//                    amount.text=""
+//                }else{
                     total_value = total_value + am
-                    if am > 0{
+//                    if am > 0{
                         inc_value = inc_value + am
-                    }else{
-                        exp_value = exp_value + (am * -1)
-                    }
+//                    }else{
+//                        exp_value = exp_value + (am * -1)
+//                    }
                     inc.text="₹ \(inc_value)"
                     exp.text="₹ \(exp_value)"
                     total.text="₹ \(total_value)"
                     UserManager.shared.users[ind].transactions.append(new_t)
                     tableview.reloadData()
-                }
+//                }
             }else{
                 let okhandler = {
                     (action: UIAlertAction)->Void in
@@ -135,7 +142,106 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         var val = Float(Float(exp_value)/Float(inc_value))
         progressbar.progress = val
+        if tracki_on != 0{
+            tracking()
+        }
     }
+    
+    @IBAction func new_trans_new(_ sender: Any) {
+        var ramount = amount.text!
+        if !edit.isOn{
+            if var am = Int(ramount){
+                new_t.amount = -am
+                new_t.description=des.text!
+                amount.text=""
+                des.text=""
+                if new_t.description == ""{
+                    new_t.description="description not given"
+                }
+                var ctotal = total_value
+                
+//                if (ctotal + am) < 0 {
+//                    let okhandler = {
+//                        (action: UIAlertAction)->Void in
+//                    }
+//                    let alert = UIAlertController(title: "Warning!", message: "OOOps you dont have that much amount", preferredStyle: .alert)
+//                    alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
+//                    self.present(alert, animated: true, completion: nil)
+//                    amount.text=""
+//                }else{
+                    total_value = total_value + am
+//                    if am > 0{
+//                        inc_value = inc_value + am
+//                    }else{
+                        exp_value = exp_value + (am * -1)
+//                    }
+                    inc.text="₹ \(inc_value)"
+                    exp.text="₹ \(exp_value)"
+                    total.text="₹ \(total_value)"
+                    UserManager.shared.users[ind].transactions.append(new_t)
+                    tableview.reloadData()
+//                }
+            }else{
+                let okhandler = {
+                    (action: UIAlertAction)->Void in
+                }
+                let alert = UIAlertController(title: "Warning!", message: "Please Enter a valid amount", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
+                self.present(alert, animated: true, completion: nil)
+                amount.text=""
+            }
+        }else{
+            if var am = Int(ramount){
+                var tot = total_value
+                print("\(total_value) in editing")
+                total_value = total_value + am
+                print("\(total_value) in editing")
+                if total_value < 0 {
+                    total_value = tot
+                    let okhandler = {
+                        (action: UIAlertAction)->Void in
+                    }
+                    let alert = UIAlertController(title: "Warning!", message: "Please check the amount you Entered", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
+                    self.present(alert, animated: true, completion: nil)
+                    amount.text=""
+                }else{
+                    if am > 0{
+                        inc_value = inc_value + am
+                    }else{
+                        exp_value = exp_value + (am * -1)
+                    }
+                    inc.text="₹ \(inc_value)"
+                    exp.text="₹ \(exp_value)"
+                    total.text="₹ \(total_value)"
+                    UserManager.shared.users[ind].transactions[edit_ind].amount = am
+                    UserManager.shared.users[ind].transactions[edit_ind].description=des.text!
+                    amount.text=""
+                    des.text=""
+                    edit.setOn(false, animated: false)
+                    tableview.reloadData()
+                }
+            }else{
+                let okhandler = {
+                    (action: UIAlertAction)->Void in
+                }
+                let alert = UIAlertController(title: "Warning!", message: "Please Enter a valid amount", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
+                self.present(alert, animated: true, completion: nil)
+                amount.text=""
+            }
+        }
+        var val = Float(Float(exp_value)/Float(inc_value))
+        progressbar.progress = val
+        if tracki_on != 0{
+            tracking()
+        }
+    }
+    
+    
+    
+    
+    
     
     @IBAction func logout(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -245,26 +351,62 @@ class dataViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         obj.modalPresentationStyle = .fullScreen
     }
     
-    var path:String!
-    var urlpath:URL!
-    var audioplayer:AVPlayer!
-    var playercontroller = AVPlayerViewController()
-    
+//    var path:String!
+//    var urlpath:URL!
+//    var audioplayer:AVPlayer!
+//    var playercontroller = AVPlayerViewController()
+//    
 
     @IBAction func video(_ sender: Any) {
-        path = Bundle.main.path(forResource: "video", ofType: "mov")
-        urlpath = URL(fileURLWithPath: path)
-        
-        audioplayer = AVPlayer(url: urlpath)
-        playercontroller.player=audioplayer
-        
-        present(playercontroller, animated: true, completion: nil)
-        playercontroller.player?.play()
+//        path = Bundle.main.path(forResource: "video", ofType: "mov")
+//        urlpath = URL(fileURLWithPath: path)
+//        
+//        audioplayer = AVPlayer(url: urlpath)
+//        playercontroller.player=audioplayer
+//        
+//        present(playercontroller, animated: true, completion: nil)
+//        playercontroller.player?.play()
         
     }
     
     
+   
+    @IBOutlet weak var start_tracking_outlet: UIButton!
     
+    var tracki = 0
+    var tracki_on = 0
+    var tracki_exp = 0
+    @IBAction func start_t(_ sender: Any) {
+        if tracki_on != 0{
+            let alert = UIAlertController(title: "OOOps", message: "Tracking is still going on if u want it to stop click on Reset Tracking", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }else{
+            start_tracking_outlet.backgroundColor = UIColor.red
+            track.text = "₹\(tracki)"
+            tracki_exp=UserManager.shared.users[ind].transactions.count
+            tracki_on=1
+        }
+    }
+    
+    @IBAction func reset_t(_ sender: Any) {
+        tracki_on = 0
+        track.text = ""
+        start_tracking_outlet.backgroundColor = UIColor.clear
+    }
+    var track_after = 0
+    func tracking(){
+        for trans in UserManager.shared.users[ind].transactions{
+            if trans.amount < 0 && track_after >= tracki_exp {
+                tracki = tracki + trans.amount
+                print(trans.amount)
+            }
+            track_after = track_after + 1
+        }
+        track.text = "₹\(tracki)"
+        track_after = 0
+        tracki=0
+    }
     
     
 }

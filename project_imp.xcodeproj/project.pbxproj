@@ -20,6 +20,7 @@
 		BE8A5FF62AEB8A3E007E09E1 /* video.mov in Resources */ = {isa = PBXBuildFile; fileRef = BE8A5FF52AEB8A3E007E09E1 /* video.mov */; };
 		BEB3193B2ADA98F2001080AB /* moredataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3193A2ADA98F2001080AB /* moredataViewController.swift */; };
 		BEB3193D2ADA9C08001080AB /* AuthorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3193C2ADA9C08001080AB /* AuthorViewController.swift */; };
+		BEEA6EAF2AF22B3F0011734C /* informationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEA6EAE2AF22B3F0011734C /* informationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		BE8A5FF52AEB8A3E007E09E1 /* video.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = video.mov; path = ../../../video.mov; sourceTree = "<group>"; };
 		BEB3193A2ADA98F2001080AB /* moredataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moredataViewController.swift; sourceTree = "<group>"; };
 		BEB3193C2ADA9C08001080AB /* AuthorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorViewController.swift; sourceTree = "<group>"; };
+		BEEA6EAE2AF22B3F0011734C /* informationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = informationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 				BE4E74F22AD7C10B0045E9DF /* Info.plist */,
 				BE4E74FA2AD7DF960045E9DF /* signupViewController.swift */,
 				BE4E74FC2AD828850045E9DF /* User.swift */,
+				BEEA6EAE2AF22B3F0011734C /* informationViewController.swift */,
 				BE4E74FE2AD82BFD0045E9DF /* dataViewController.swift */,
 				BE4E75262AD910A00045E9DF /* UserManager.swift */,
 				BEB3193A2ADA98F2001080AB /* moredataViewController.swift */,
@@ -167,6 +170,7 @@
 				BE4E74E52AD7C1090045E9DF /* AppDelegate.swift in Sources */,
 				BE4E74FB2AD7DF960045E9DF /* signupViewController.swift in Sources */,
 				BEB3193D2ADA9C08001080AB /* AuthorViewController.swift in Sources */,
+				BEEA6EAF2AF22B3F0011734C /* informationViewController.swift in Sources */,
 				BE4E74FD2AD828850045E9DF /* User.swift in Sources */,
 				BE4E74E72AD7C1090045E9DF /* SceneDelegate.swift in Sources */,
 			);

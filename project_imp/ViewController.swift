@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController{
     var new_trans:[Transaction]=[]
@@ -13,6 +14,13 @@ class ViewController: UIViewController{
     @IBOutlet weak var test: UILabel!
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var pass: UITextField!
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    
     
     var ind=0
     override func viewDidLoad() {

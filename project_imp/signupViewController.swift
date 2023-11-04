@@ -69,7 +69,7 @@ class signupViewController: UIViewController {
                 let okhandler = {
                     (action: UIAlertAction)->Void in
                 }
-                let alert = UIAlertController(title: "Warning!", message: "Lenght of password is too short", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Warning!", message: "Length of password is too short", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "ok", style: .default, handler: okhandler))
                 self.present(alert, animated: true, completion: nil)
                 pass.text=""

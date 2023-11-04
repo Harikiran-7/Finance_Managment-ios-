@@ -49,6 +49,9 @@ class moredataViewController: UIViewController {
     }
     
     
+    @IBAction func information(_ sender: Any) {
+        performSegue(withIdentifier: "information", sender: nil)
+    }
     
 
 }
